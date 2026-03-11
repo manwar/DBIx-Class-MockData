@@ -156,7 +156,7 @@ sub deploy {
     my $ddl = eval { $schema->deployment_statements };
     if ($@ || !$ddl) {
         eval { $schema->deploy({ add_drop_table => 0, ignore_errors => 1 }) };
-        warn "[WARN] deploy error (continuing): $@\n" if $@;
+        croak "Deploy failed: $@" if $@;
     }
     else {
         $schema->storage->dbh_do(sub {
@@ -199,7 +199,7 @@ sub wipe {
             }
         });
     };
-    warn "[WARN] wipe error (ignored): $@\n" if $@;
+    croak "Wipe failed: $@" if $@;
 
     $schema->deploy({ add_drop_table => 0 });
     $self->_log("Wipe and redeploy complete");
@@ -583,6 +583,17 @@ Values are produced from each column's declared C<data_type>:
   unknown / blank dtype        colname_N  (colname_N_SALT if unique)
 
 Nullable columns receive NULL roughly 17% of the time (never for unique cols).
+
+=head1 CLI TOOL
+
+This distribution ships with a command-line tool B<dbic-mockdata> in the
+C<script/> directory, installed into your C<PATH> by C<make install>.
+
+    dbic-mockdata --schema-dir t/lib --namespace MyApp::Schema \
+                  --dsn "dbi:SQLite:dbname=test.db" --deploy --rows 5
+
+Run C<dbic-mockdata --help> for the full list of options, or see
+L<dbic-mockdata> for the complete manual.
 
 =head1 DEPENDENCIES
 

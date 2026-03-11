@@ -111,7 +111,10 @@ my $mock = DBIx::Class::MockData->new(
     (defined $opt{seed} ? (seed => $opt{seed}) : ()),
 );
 
-if    ($opt{'dry-run'}) { $mock->dry_run  }
-elsif ($opt{wipe})      { $mock->wipe->generate   }
-elsif ($opt{deploy})    { $mock->deploy->generate }
-else                    { $mock->generate }
+eval {
+    if    ($opt{'dry-run'}) { $mock->dry_run          }
+    elsif ($opt{wipe})      { $mock->wipe->generate   }
+    elsif ($opt{deploy})    { $mock->deploy->generate }
+    else                    { $mock->generate         }
+};
+die $@ if $@;

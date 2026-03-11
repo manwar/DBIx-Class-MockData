@@ -22,6 +22,10 @@ WriteMakefile(
         'Test::More'      => '0.98',
         'Test::Exception' => 0,
         'DBD::SQLite'     => 0,
+        'DBI'             => 0,
+        'File::Temp'      => 0,
+        'IPC::Open3'      => 0,
+        'Symbol'          => 0,
     },
 
     META_MERGE => {
