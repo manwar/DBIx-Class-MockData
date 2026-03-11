@@ -13,7 +13,7 @@ dbic-mockdata - Generate mock test data for a DBIx::Class schema
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 SYNOPSIS
 

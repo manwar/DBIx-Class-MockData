@@ -30,6 +30,12 @@ WriteMakefile(
 
     META_MERGE => {
         'meta-spec' => { version => 2 },
+        provides    => {
+            'DBIx::Class::MockData' => {
+                file    => 'lib/DBIx/Class/MockData.pm',
+                version => MM->parse_version('lib/DBIx/Class/MockData.pm')
+            },
+        },
         resources   => {
             repository => {
                 type => 'git',

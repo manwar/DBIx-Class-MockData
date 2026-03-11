@@ -1,5 +1,13 @@
 Revision history for DBIx::Class::MockData
 
+0.02  2026-03-11
+
+      - Makefile.PL: added provides block to META_MERGE so MetaCPAN correctly
+        indexes DBIx::Class::MockData with its version.
+      - README.md: corrected SYNOPSIS to use new() with a pre-connected schema
+        instead of the removed schema() entry point.
+
+
 0.01  2026-03-11
 
       First release.

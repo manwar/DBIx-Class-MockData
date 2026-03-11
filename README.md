@@ -7,24 +7,25 @@ Generate mock test data for any DBIx::Class schema.
 ```perl
 use DBIx::Class::MockData;
 
-# Load, connect, deploy and populate in one chain
+# Connect your schema the normal DBIx::Class way
+my $schema = MyApp::Schema->connect($dsn, $user, $pass);
 
+# Minimal usage: deploy tables then insert rows
 DBIx::Class::MockData
-    ->schema(
+    ->new(
+        schema     => $schema,
         schema_dir => 't/lib',
-        namespace  => 'MyApp::Schema',
-        dsn        => 'dbi:SQLite:dbname=test.db',
-        rows       => 10,
     )
     ->deploy
     ->generate;
 
-# Or pass an already-connected schema
-
-my $mock = DBIx::Class::MockData->schema(
-    schema  => $connected_schema,
-    rows    => 5,
-    verbose => 1,
+# With options
+my $mock = DBIx::Class::MockData->new(
+    schema     => $schema,
+    schema_dir => 't/lib',
+    rows       => 10,
+    verbose    => 1,
+    seed       => 42,
 );
 
 $mock->wipe->generate;
